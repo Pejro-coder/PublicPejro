@@ -1,0 +1,87 @@
+import random
+from art import logo
+
+def deal_card():
+    cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+    # cards = [11, 10, 2]
+    return random.choice(cards)
+
+def calculate_score(cards):
+    if sum(cards) == 21 and len(cards) == 2:
+        return 0
+    if sum(cards) > 21 and 11 in cards:
+        cards.remove(11)
+        cards.append(1)
+    return sum(cards)
+
+def compare(user_score, computer_score):
+    if user_score == computer_score:
+        print("It's a draw.")
+    elif user_score == 21:
+        print("You win. BLACKJACK")
+    elif computer_score == 21:
+        print("You loose. BLACKJACK")    
+    elif user_score > 21:
+        print("You loose. Your score is over 21.")
+    elif computer_score > 21:
+      print("You win. Dealer score is over 21.")
+    elif computer_score > user_score:
+        print("You loose. Dealer has a higher score.")
+    elif computer_score < user_score:
+        print("You win. You have a higher score, than the dealer.")
+
+def start_game():    
+    user_cards = []
+    computer_cards = []      
+    start_game_input = input("Do you want to start the game? 'yes' or 'no': ")
+    while start_game_input not in ["yes", "no"]:
+        start_game_input = input("Do you want to start the game? 'yes' or 'no': ")        
+    if start_game_input == "no":
+        print("Game not started. Exiting...")
+        # return
+    elif start_game_input == "yes":
+        
+        for _ in range(2):
+            user_cards.append(deal_card())
+            computer_cards.append(deal_card())
+
+        computer_score = calculate_score(computer_cards)
+        user_score = calculate_score(user_cards)
+        game_over = False
+        if user_score == 0:
+            user_score = 21
+            game_over = True
+            
+        print(logo)
+        print(f"Dealer: [?, {computer_cards[1]}]")
+        print(f"Player: {user_cards} | Score: {user_score}")
+        
+        while game_over is not True:  
+            deal = input("    Draw another card? 'yes' or 'no': ").lower()
+            while deal not in ["yes", "no"]:
+                deal = input("    Draw another card? 'yes' or 'no': ").lower()
+            if deal == "yes":
+                new_card = deal_card()
+                user_cards.append(new_card)
+                user_score = calculate_score(user_cards)
+                print(f"Player: {user_cards} | score: {user_score}")
+            if calculate_score(user_cards) > 21:
+                game_over = True 
+            if deal == "no":
+                game_over = True
+
+        if game_over is True:
+            if computer_score == 0:
+                computer_score = 21
+            while computer_score < 17:
+                new_card = deal_card()
+                computer_cards.append(new_card)
+                computer_score = calculate_score(computer_cards)
+                
+        print(f"\n-------------------------------------------------\n")
+        print(f"Dealer: {computer_cards} | Score: {computer_score}")
+        print(f"Player: {user_cards} | Score: {user_score}\n")      
+
+        compare(user_score, computer_score)
+            
+start_game()
