@@ -1,0 +1,47 @@
+# Ugotovi kako dobiti random data iz seznama
+import random
+from art import vs
+from game_data import data
+
+# funkcija, ki vrne random "celebrity" dictionary iz data seznama
+def choose_next_celebrity():
+    random_number = random.randint(1, 50)
+    return data[random_number -1]
+
+A_celebrity = choose_next_celebrity()
+print(f"Name: {A_celebrity['name']} - {A_celebrity['description']}\nfollowers: {A_celebrity['follower_count']} million")
+
+print(vs)
+
+B_celebrity = choose_next_celebrity()
+print(f"Name: {B_celebrity['name']} - {B_celebrity['description']}\nfollowers: {B_celebrity['follower_count']} million")
+
+def higer_lower():
+    game_over = False
+    while game_over is not True:  
+        choice = input("\n'h' - higher or 'l' - lower followers count? ")
+        if choice == "l":      
+            if A_celebrity['follower_count'] > B_celebrity['follower_count']:
+                print(f"followers: {B_celebrity['follower_count']}")
+                print("Correct!")
+                # A_celebrity = B_celebrity
+            else:
+                print("False!")   
+                game_over = True
+                return
+        else:
+            if A_celebrity['follower_count'] < B_celebrity['follower_count']:
+                print(f"followers: {B_celebrity['follower_count']}")
+                print("Correct!")
+                # A_celebrity = B_celebrity
+            else:
+                print("False!")   
+                game_over = True
+                return
+            
+    print(vs)
+    
+    B_celebrity = choose_next_celebrity()
+    print(f"Name: {B_celebrity['name']} - {B_celebrity['description']}\nfollowers: {B_celebrity['follower_count']} million")
+  
+higer_lower()
