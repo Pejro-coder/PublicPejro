@@ -1,0 +1,27 @@
+import turtle as t
+import random
+
+t.colormode(255)
+
+def random_color():
+    r = random.randint(0, 255)
+    g = random.randint(0, 255)
+    b = random.randint(0, 255)
+    color = (r, g, b)
+    return color
+
+
+def draw_spirograph_angela(gap_size):
+    for _ in range(int(1080 / gap_size)):
+        jim.pencolor(random_color())
+        jim.circle(300)
+        jim.setheading(jim.heading() + gap_size)
+
+
+jim = t.Turtle()
+jim.color("gold")
+jim.shape("turtle")
+jim.speed("fastest")
+jim.pensize(1)
+
+draw_spirograph_angela(1)
